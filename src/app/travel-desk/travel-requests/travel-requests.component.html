@@ -1,0 +1,58 @@
+<div class="container mt-4">
+    <h2 class="text-center mb-3">Travel Requests</h2>
+  
+    <table class="table table-bordered table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Request ID</th>
+          <th>User</th>
+          <th>Trip Purpose</th>
+          <th>Destination</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Budget</th>
+          <th>Status</th>
+          <th>Approved By</th>
+          <th>Approval Date</th>
+          <th>Initiated</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let request of travelRequests()">
+          <td>{{ request.requestId }}</td>
+          <td>{{ request.user.username }}</td>
+          <td>{{ request.tripPurpose }}</td>
+          <td>{{ request.destination }}</td>
+          <td>{{ request.startDate }}</td>
+          <td>{{ request.endDate }}</td>
+          <td>${{ request.estimatedBudget.toFixed(2) }}</td>
+          <td>
+            <span [ngClass]="{
+              'text-success': request.status === 'Approved',
+              'text-danger': request.status === 'Rejected',
+              'text-warning': request.status === 'Pending'
+            }">
+              {{ request.status }}
+            </span>
+          </td>
+          <td>{{ request.approvedBy ? request.approvedBy.username : "N/A" }}</td>
+          <td>{{ request.approvalDate || "N/A" }}</td>
+          <td>{{ request.initiated ? "✅ Yes" : "❌ No" }}</td>
+          <td>
+            <button
+              class="btn btn-success btn-sm"
+              *ngIf="request.status === 'Pending'"
+              (click)="approveInitialRequest(request)"
+            >
+              Approve
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="travelRequests().length === 0">
+          <td colspan="12" class="text-center text-muted">No records available</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

@@ -1,0 +1,42 @@
+<form #travelForm="ngForm" (ngSubmit)="submitForm(travelForm)" class="container mt-4 p-4 border rounded shadow bg-light">
+    <h3 class="mb-3">Travel Request Form</h3>
+  
+    <div class="mb-3">
+      <label for="tripPurpose" class="form-label">Trip Purpose</label>
+      <textarea class="form-control" id="tripPurpose" name="tripPurpose" [(ngModel)]="formData.tripPurpose" required #tripPurpose="ngModel"></textarea>
+      <div class="text-danger" *ngIf="tripPurpose.invalid && tripPurpose.touched">Trip purpose is required.</div>
+    </div>
+  
+    <div class="mb-3">
+      <label for="destination" class="form-label">Destination</label>
+      <input type="text" class="form-control" id="destination" name="destination" [(ngModel)]="formData.destination" required #destination="ngModel" />
+      <div class="text-danger" *ngIf="destination.invalid && destination.touched">Destination is required.</div>
+    </div>
+  
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="startDate" class="form-label">Start Date</label>
+        <input type="date" class="form-control" id="startDate" name="startDate" [(ngModel)]="formData.startDate" required #startDate="ngModel" />
+        <div class="text-danger" *ngIf="startDate.invalid && startDate.touched">Start date is required.</div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="endDate" class="form-label">End Date</label>
+        <input type="date" class="form-control" id="endDate" name="endDate" [(ngModel)]="formData.endDate" required #endDate="ngModel" />
+        <div class="text-danger" *ngIf="endDate.invalid && endDate.touched">End date is required.</div>
+      </div>
+    </div>
+  
+    <div class="mb-3">
+      <label for="estimatedBudget" class="form-label">Estimated Budget</label>
+      <input type="number" class="form-control" id="estimatedBudget" name="estimatedBudget" [(ngModel)]="formData.estimatedBudget" required min="1" step="0.01" #estimatedBudget="ngModel" />
+      <div class="text-danger" *ngIf="estimatedBudget.invalid && estimatedBudget.touched">Enter a valid budget.</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="approvalDate" class="form-label">Approval Date</label>
+      <input type="date" class="form-control" id="approvalDate" name="approvalDate" [(ngModel)]="formData.approvalDate" #approvalDate="ngModel" />
+    </div>
+  
+    <button type="submit" class="btn btn-primary" [disabled]="travelForm.invalid">Submit</button>
+  </form>
+  

@@ -1,0 +1,60 @@
+<div class="container mt-4">
+    <h2 class="text-primary">Travel Requests</h2>
+  
+    <table class="table table-bordered table-striped table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th>Request ID</th>
+          <th>Employee</th>
+          <th>Purpose</th>
+          <th>Destination</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Budget ($)</th>
+          <th>Status</th>
+          <th>Approved By</th>
+          <th>Approval Date</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let request of getRequests()">
+          <td>{{ request.requestId }}</td>
+          <td>{{ request.user.username }}</td>
+          <td>{{ request.tripPurpose }}</td>
+          <td>{{ request.destination }}</td>
+          <td>{{ request.startDate }}</td>
+          <td>{{ request.endDate }}</td>
+          <td>{{ request.estimatedBudget }}</td>
+          <td>
+            <span 
+              class="badge"
+              [ngClass]="{
+                'text-bg-warning': request.status === 'Pending',
+                'text-bg-success': request.status === 'Approved',
+                'text-bg-danger': request.status === 'Rejected'
+              }">
+              {{ request.status }}
+            </span>
+          </td>
+          <td>{{ request.approvedBy?.username || '-' }}</td>
+          <td>{{ request.approvalDate || '-' }}</td>
+          <td >
+            <div class="d-flex align-items-center gap-2"> 
+                <button class="btn btn-sm btn-success" 
+                        (click)="updateStatus(request, 'Approved')" 
+                        [disabled]="request.status !== 'Pending'">
+                  Approve
+                </button>
+                <button class="btn btn-sm btn-danger ml-2" 
+                        (click)="updateStatus(request, 'Rejected')" 
+                        [disabled]="request.status !== 'Pending'">
+                  Reject
+                </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

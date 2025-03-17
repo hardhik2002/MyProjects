@@ -1,0 +1,60 @@
+<div class="container mt-4">
+    <h3 class="text-primary text-center"><i class="bi bi-table"></i> Expense List</h3>
+    @if (allExpenses().length > 0) {
+        <div class="table-responsive">
+          <table class="table table-striped table-hover shadow-sm">
+            <thead class="table-dark">
+              <tr>
+                <th>#</th>
+                <th>Employee</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Currency</th>
+                <th>Receipt</th>
+                <th>Status</th>
+                <th>Options</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let expense of allExpenses(); let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ expense.user.username }}</td>
+                <td>{{ expense.expenseType }}</td>
+                <td>{{ expense.amount | currency: expense.currency }}</td>
+                <td>{{ expense.currency }}</td>
+                <td>
+                  <a [href]="expense.receiptUrl" target="_blank" class="btn btn-sm btn-outline-info">
+                    <i class="bi bi-link-45deg"></i> View Receipt
+                  </a>
+                </td>
+                <td>
+                  <span class="badge" [ngClass]="getStatusClass(expense.status)">
+                    {{ expense.status }}
+                  </span>
+                </td>
+                <td>
+                    @if (expense.status === 'Submitted') {
+                        <button 
+                          class="btn btn-success btn-sm me-2" 
+                          (click)="updateExpenseStatus(expense, 'Approved')">
+                          <i class="bi bi-check-circle"></i> Approve
+                        </button>
+                        <button 
+                          class="btn btn-danger btn-sm"
+                          (click)="updateExpenseStatus(expense, 'Rejected')">
+                          <i class="bi bi-x-circle"></i> Reject
+                        </button>
+                    } @else {
+                        <div>---</div>
+                    }
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    } @else {
+        <hr>
+        <div class="text-muted text-center">No Expense List</div>
+    }
+  </div>
+  

@@ -1,0 +1,52 @@
+<div class="container mt-4">
+    <h3 class="mb-3 text-center">My Travel Requests</h3>
+    
+    @if (myRequests.length > 0){
+        <table class="table table-bordered table-hover shadow-sm bg-light">
+          <thead class="table-primary">
+            <tr>
+              <th>Request ID</th>
+              <th>User</th>
+              <th>Trip Purpose</th>
+              <th>Destination</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Estimated Budget</th>
+              <th>Status</th>
+              <th>Approved By</th>
+              <th>Approval Date</th>
+              <th>Expense Options</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let request of myRequests">
+              <td>{{ request.requestId }}</td>
+              <td>{{ request.user.username }}</td>
+              <td>{{ request.tripPurpose }}</td>
+              <td>{{ request.destination }}</td>
+              <td>{{ request.startDate }}</td>
+              <td>{{ request.endDate }}</td>
+              <td>{{ request.estimatedBudget | currency }}</td>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'bg-warning': request.status === 'Pending',
+                  'bg-success': request.status === 'Approved',
+                  'bg-danger': request.status === 'Rejected'
+                }">
+                  {{ request.status }}
+                </span>
+              </td>
+              <td>{{ request.approvedBy ? request.approvedBy.username : 'N/A' }}</td>
+              <td>{{ request.approvalDate || 'N/A' }}</td>
+              <td>
+                <button class="btn btn-sm btn-warning" (click)="onRedirect(request.requestId)">Submit Expense</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    } @else {
+        <hr>
+        <div class="text-muted text-center">No Travel Requests</div>
+    }
+  </div>
+  

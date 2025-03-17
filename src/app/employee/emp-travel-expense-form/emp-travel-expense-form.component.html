@@ -1,0 +1,103 @@
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card shadow-lg p-4" style="width: 500px; border-radius: 12px;">
+      <h3 class="text-center text-primary mb-4">
+        <i class="bi bi-wallet2"></i> Submit Expense
+      </h3>
+  
+      <form #expenseForm="ngForm" (ngSubmit)="onSubmit(expenseForm)">
+        <!-- Expense Type -->
+        <div class="form-group mb-3">
+          <label for="expenseType" class="form-label fw-bold">Expense Type</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-list-task"></i></span>
+            <select
+              id="expenseType"
+              class="form-control"
+              [(ngModel)]="expense.expenseType"
+              name="expenseType"
+              required
+              #expenseType="ngModel"
+            >
+              <option value="" disabled selected>Select Expense Type</option>
+              <option *ngFor="let type of expenseTypes" [value]="type">{{ type }}</option>
+            </select>
+          </div>
+          <div *ngIf="expenseType.invalid && expenseType.touched" class="text-danger small">
+            Expense type is required.
+          </div>
+        </div>
+  
+        <!-- Amount -->
+        <div class="form-group mb-3">
+          <label for="amount" class="form-label fw-bold">Amount</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-currency-dollar"></i></span>
+            <input
+              type="number"
+              id="amount"
+              class="form-control"
+              [(ngModel)]="expense.amount"
+              name="amount"
+              required
+              min="0.01"
+              step="0.01"
+              #amount="ngModel"
+              placeholder="Enter amount"
+            />
+          </div>
+          <div *ngIf="amount.invalid && amount.touched" class="text-danger small">
+            Amount must be a positive value.
+          </div>
+        </div>
+  
+        <!-- Currency -->
+        <div class="form-group mb-3">
+          <label for="currency" class="form-label fw-bold">Currency</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-cash"></i></span>
+            <input
+              type="text"
+              id="currency"
+              class="form-control"
+              [(ngModel)]="expense.currency"
+              name="currency"
+              required
+              pattern="[A-Z]{3}"
+              #currency="ngModel"
+              placeholder="USD, INR, EUR"
+            />
+          </div>
+          <div *ngIf="currency.invalid && currency.touched" class="text-danger small">
+            Currency must be in 3-letter format (e.g., USD, INR).
+          </div>
+        </div>
+  
+        <!-- Receipt Link -->
+        <div class="form-group mb-3">
+          <label for="receiptLink" class="form-label fw-bold">Receipt Link</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+            <input
+              type="url"
+              id="receiptLink"
+              class="form-control"
+              [(ngModel)]="expense.receiptUrl"
+              name="receiptUrl"
+              required
+              #receiptLink="ngModel"
+              placeholder="Paste receipt link"
+            />
+          </div>
+          <div *ngIf="receiptLink.invalid && receiptLink.touched" class="text-danger small">
+            Please enter a valid URL for the receipt.
+          </div>
+        </div>
+  
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary w-100" [disabled]="expenseForm.invalid">
+          <i class="bi bi-send"></i> Submit Expense
+        </button>
+      </form>
+    </div>
+  </div>
+  

@@ -1,0 +1,74 @@
+<div class="container mt-4">
+    <h2 class="text-primary">Travel Request Form</h2>
+    <form [formGroup]="travelForm" (ngSubmit)="submitTravelRequest()" class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label">Full Name</label>
+        <input type="text" class="form-control" formControlName="fullName" required />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Department</label>
+        <input type="text" class="form-control" formControlName="department" required />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Designation</label>
+        <input type="text" class="form-control" formControlName="designation" required />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Contact Number</label>
+        <input type="text" class="form-control" formControlName="contactNumber" required />
+        <div *ngIf="travelForm.controls['contactNumber'].invalid && travelForm.controls['contactNumber'].touched"
+          class="text-danger">
+          Invalid phone number.
+        </div>
+      </div>
+      <div class="col-md-12">
+        <label class="form-label">Trip Purpose</label>
+        <textarea class="form-control" formControlName="tripPurpose" required></textarea>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Destination</label>
+        <input type="text" class="form-control" formControlName="destination" required />
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Start Date</label>
+        <input type="date" class="form-control" formControlName="startDate" required />
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">End Date</label>
+        <input type="date" class="form-control" formControlName="endDate" required />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Estimated Budget</label>
+        <input type="number" class="form-control" formControlName="estimatedBudget" required />
+      </div>
+      <div class="col-md-12">
+        <button type="submit" class="btn btn-primary" [disabled]="travelForm.invalid">Submit Request</button>
+      </div>
+    </form>
+    
+    <hr />
+
+    <h2 class="text-primary">Expense Submission</h2>
+    <form [formGroup]="expensesForm" (ngSubmit)="submitExpense()" class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label">Expense Type</label>
+        <select class="form-select" formControlName="expenseType">
+          <option *ngFor="let type of expenseTypes" [value]="type">{{ type }}</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Amount</label>
+        <input type="number" class="form-control" formControlName="amount" required />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Currency</label>
+        <input type="text" class="form-control" formControlName="currency" required />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Receipt Upload</label>
+        <input type="file" class="form-control" (change)="handleFileUpload($event)" />
+      </div>
+      <div class="col-md-12">
+        <button type="submit" class="btn btn-success" [disabled]="expensesForm.invalid">Submit Expense</button>
+      </div>
+    </form>
